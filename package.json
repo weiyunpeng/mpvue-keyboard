@@ -1,0 +1,23 @@
+{
+  "name": "mpvue-keyboard",
+  "version": "1.0.0",
+  "description": "一个车牌输入键盘组件，支持新能源车牌号输入",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weiyunpeng/mpvue-keyboard.git"
+  },
+  "keywords": [
+    "mpvue",
+    "keyboard"
+  ],
+  "author": "Mr.Ypeng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weiyunpeng/mpvue-keyboard/issues"
+  },
+  "homepage": "https://github.com/weiyunpeng/mpvue-keyboard#readme"
+}
