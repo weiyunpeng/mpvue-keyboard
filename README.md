@@ -1,5 +1,8 @@
 # mpvue-keyboard 基于 mpvue的小程序虚拟键盘组件
 
+[![npm package](https://img.shields.io/npm/v/mpvue-keyboard.svg)](https://www.npmjs.com/package/mpvue-keyboard)
+[![npm downloads](http://img.shields.io/npm/dm/mpvue-keyboard.svg)](https://www.npmjs.com/package/mpvue-keyboard)
+
 ## 效果图
 ![默认效果1](./static/1.png)
 ![默认效果2](./static/2.png)
