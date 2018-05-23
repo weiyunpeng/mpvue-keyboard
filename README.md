@@ -29,22 +29,26 @@ npm i mpvue-keyboard --save
 
 ``` vue
 <template>
+<view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
     <keyboard :title="'输入车牌号'" @keyboard="change"></keyboard>
 </template>
 
 <script>
-import Keyboard from '@/src/keyboard';
+import Keyboard from 'mpvue-keyboard';
 export default {
     components: {
         keyboard: Keyboard
     },
     data() {
-        return {};
+        return {
+            msg:msg
+        };
     },
     computed: {},
     methods: {
         change(msg) {
             console.log(msg);
+            this.msg = msg
         }
     },
     mounted() {}
