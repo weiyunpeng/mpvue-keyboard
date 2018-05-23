@@ -2,7 +2,7 @@
   "name": "mpvue-keyboard",
   "version": "1.0.0",
   "description": "一个车牌输入键盘组件，支持新能源车牌号输入",
-  "main": "index.js",
+  "main": "src/index.vue",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

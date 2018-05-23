@@ -1,11 +1,11 @@
 <template>
-    <div class="kb">
-        <!-- <div class="kb-input row-center">
-            <text @tap="showKeyboard" class="row-center" :class="[ isKeyboard ? 'kb-input__text-focus' : 'kb-input__text']">{{textValue || placeholder}}</text>
-        </div> -->
+    <div class="kb" :style="'background:'+bgcolor">
+        <div class="kb-input row-center">
+            <text class="row-center kb-input__text">{{title}}</text>
+        </div>
         <div class="row-center">
             <ul class="kb-input kb-input__ul row-around" @tap="showKeyboard">
-                <li v-for="(item , index) in textBaseArr" :key="index" class="row-center kb-input__li" :class="index === 7 && textBaseArr[7] === ''? 'kb-input__new-energy' :'' ">{{item}}</li>
+                <li v-for="(item , index) in textBaseArr" :key="index" class="row-center kb-input__li" :style="index == textArr.length ? 'border-color:'+activeBorColor : 'border-color:'+baseBorColor" :class="index === 7 && textBaseArr[7] === ''? 'kb-input__new-energy' : '' ">{{item}}</li>
             </ul>
         </div>
 
@@ -29,7 +29,8 @@
                 </div>
 
                 <!-- 完成按钮 -->
-                <div v-if="isAlph" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="80">{{keyboardValue.spec1}}</div>
+                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__td-theme kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="80">完成</div>
+                <div v-if="isAlph" class="kb-keyboard__td kb-keyboard__finished-base row-center">完成</div>
             </div>
         </div>
     </div>
@@ -37,6 +38,24 @@
 
 <script>
 export default {
+    props: {
+        title: {
+            type: String,
+            default: '输入或拍照录入车牌'
+        },
+        bgcolor: {
+            type: String,
+            default: '#ffffff'
+        },
+        baseBorColor: {
+            type: String,
+            default: '#cccccc'
+        },
+        activeBorColor: {
+            type: String,
+            default: '#ff7149'
+        }
+    },
     data() {
         return {
             isKeyboard: true,
@@ -48,14 +67,10 @@ export default {
                 province:
                     '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝',
                 number: '1234567890',
-                alph: 'QWERTYUIOPASDFGHJKL巛ZXCVBNM',
-                spec1: '完成'
+                alph: 'QWERTYUIOPASDFGHJKL巛ZXCVBNM'
             },
             textBaseArr: ['', '', '', '', '', '', '', ''],
-            textArr: [],
-            textValue: '',
-            placeholder: '输入或拍照录入车牌',
-            activeBorColor: '#24c6dc'
+            textArr: []
         };
     },
     computed: {},
@@ -77,19 +92,17 @@ export default {
 
             if (tapVal === '巛') {
                 this.textArr.pop();
-                this.textValue = this.textArr.join('');
                 this.textBaseArr.splice(this.textArr.length, 1, '');
             } else {
                 if (this.textArr.length > 7) return false;
                 this.textArr.push(tapVal);
-                this.textValue = this.textArr.join('');
                 for (let index = 0; index < this.textArr.length; index++) {
                     const element = this.textArr[index];
                     this.textBaseArr.splice(index, 1, element);
                 }
             }
 
-            if (this.textArr.length === 1 || this.textArr.length === 7) {
+            if (this.textArr.length === 1) {
                 this.isAlph = true;
                 this.isNum = false;
             } else if (this.textArr.length === 0) {
@@ -99,7 +112,10 @@ export default {
                 this.isNum = true;
             }
         },
-        tapFinished(e) {}
+        tapFinished(e) {
+            let textValue = this.textArr.join('');
+            this.$emit('keyboard', textValue);
+        }
     },
     mounted() {
         let animation = wx.createAnimation({
@@ -118,20 +134,6 @@ $bem-component-namespace: 'kb';
 .kb {
     width: 100%;
     height: 100%;
-    --from: #ffffff;
-    --stop: #ffffff;
-    --to: #ffefba;
-
-    width: 100%;
-    height: 100%;
-    background: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        from(var(--from)),
-        color-stop(0.1, var(--stop)),
-        to(var(--to))
-    );
 }
 
 @include c('input') {
@@ -142,30 +144,12 @@ $bem-component-namespace: 'kb';
     top: 100rpx;
 
     @include e('text') {
-        --from: rgb(230, 238, 253);
-        --to: rgb(222, 233, 248);
-
-        background: linear-gradient(130deg, var(--from), var(--to));
         width: 90%;
         height: 100rpx;
         padding: 20rpx;
         border-radius: 5rpx;
         color: #bdc3c7;
-        border: 1rpx solid #eee;
         z-index: 10;
-    }
-
-    @include e('text-focus') {
-        --from: rgb(230, 238, 253);
-        --to: rgb(222, 233, 248);
-
-        background: linear-gradient(130deg, var(--from), var(--to));
-        width: 90%;
-        height: 100rpx;
-        padding: 20rpx;
-        border-radius: 5rpx;
-        color: #000;
-        border: 1rpx solid #d7dde8;
     }
 
     @include e('ul') {
@@ -248,11 +232,22 @@ $bem-component-namespace: 'kb';
 
     @include e('finished') {
         position: relative;
-        top: 7rpx;
-        background-color: #ff7149;
-        color: #fff;
+        top: 5rpx;
         flex: 1 1 23%;
         -webkit-flex: 1 1 23%;
+    }
+
+    @include e('finished-base') {
+        position: relative;
+        top: 5rpx;
+        flex: 1 1 23%;
+        -webkit-flex: 1 1 23%;
+        border: 1rpx solid #cdd0d5;
+        color: #1e1e1e;
+        --from: #e5e5e5;
+        --to: #e5e5e5;
+
+        background: linear-gradient(130deg, var(--from), var(--to));
     }
 
     @include e('td-theme') {
@@ -274,8 +269,8 @@ $bem-component-namespace: 'kb';
     @include e('td-tap-fin-theme') {
         border: 1rpx solid #cdd0d5;
         color: #fff;
-        --from: #ff7149;
-        --to: #ff7149;
+        --from: #cdd0d5;
+        --to: #b8b8b9;
 
         background: linear-gradient(130deg, var(--from), var(--to));
     }
