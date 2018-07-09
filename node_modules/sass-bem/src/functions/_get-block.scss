@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/// Get block element from selector.
+///
+/// @access private
+///
+/// @param {String} $selector - Selector, from where we will take block
+///
+/// @returns {String} - Block element
+
+@function get-block($selector) {
+  $block: str-slice($selector, 2, bem-index($selector) - 1);
+  
+  @while (is-block($block) == false) {
+    $block: str-slice($block, 0, bem-index($block) - 1);
+  }
+  
+  @return $block;
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/// Check if selector is block.
+///
+/// @access private
+///
+/// @param {String} $selector - Selector, which we will check for block
+///
+/// @returns {Boolean}
+
+@function is-block($selector) {
+  @return not is-element($selector) and not is-modifier($selector) and not has-state($selector) and not has-pseudo($selector);
+}

@@ -1,11 +1,11 @@
 <template>
-    <div class="kb" :style="'background:'+bgcolor">
-        <div class="kb-input row-center">
+    <div class="kb">
+        <div v-if="title" class="kb-input row-center">
             <text class="row-center kb-input__text">{{title}}</text>
         </div>
         <div class="row-center">
             <ul class="kb-input kb-input__ul row-around" @tap="showKeyboard">
-                <li v-for="(item , index) in textBaseArr" :key="index" class="row-center kb-input__li" :style="index == textArr.length ? 'border-color:'+activeBorColor : 'border-color:'+baseBorColor" :class="index === 7 && textBaseArr[7] === ''? 'kb-input__new-energy' : '' ">{{item}}</li>
+                <li v-for="(item, index) in textBaseArr" :key="index" class="row-center kb-input__li" :style="index === textArr.length ? 'border-color:'+activeBorColor : 'border-color:'+baseBorColor" :class="index === 7 && textBaseArr[7] === ''? 'kb-input__new-energy' : '' ">{{item}}</li>
             </ul>
         </div>
 
@@ -13,24 +13,23 @@
             <div class="kb-keyboard__over row-wrap" v-if="isKeyboard" @tap="closeKeyboard"></div>
             <div class="kb-keyboard__panle row-wrap" v-if="isKeyboard" :animation="animationData">
                 <!--省份简写键盘-->
-                <div v-if="!isAlph" @tap="tapKeyboard" :data-index="i" :data-val="proItem" class="kb-keyboard__td kb-keyboard__td-theme row-center" v-for="(proItem , i) in keyboardValue.province" :key="proItem" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{proItem}}</div>
+                <div v-if="!isAlph" v-for="(proItem, i) in keyboardValue.province" :key="proItem" @tap="tapKeyboard" :data-index="i" :data-val="proItem" class="kb-keyboard__td kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{proItem}}</div>
 
                 <!--数字字母键盘-->
-                <div v-if="isAlph && isNum" @tap="tapKeyboard" :data-index="j" :data-val="numItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" v-for="(numItem, j) in keyboardValue.number" :key="numItem" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{numItem}}</div>
-                <div v-if="isAlph && !isNum" class="kb-keyboard__td-num kb-keyboard__td-tap-theme row-center" v-for="(numItem, j) in keyboardValue.number" :key="numItem">{{numItem}}</div>
+                <div v-if="isAlph && isNum" v-for="(numItem, j) in keyboardValue.number" :key="numItem" @tap="tapKeyboard" :data-index="j" :data-val="numItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{numItem}}</div>
+                <div v-if="isAlph && !isNum" v-for="(numItem, q) in keyboardValue.number" :key="q" class="kb-keyboard__td-num kb-keyboard__td-tap-theme row-center">{{numItem}}</div>
 
                 <!--字母键盘-->
-                <div v-if="isAlph" @tap="tapKeyboard" :data-index="k" :data-val="alItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" v-for="(alItem , k) in keyboardValue.alph" :key="alItem" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">
-                    <!-- 添加删除icon -->
-                    <div :data-index="k" :data-val="alItem" v-if="k === 19" class="kb-keyboard__del"></div>
-                    <div :data-index="k" :data-val="alItem" v-else="k !== 19">
+                <div v-if="isAlph" v-for="(alItem , k) in keyboardValue.alph" :key="alItem" @tap="tapKeyboard" :data-index="k" :data-val="alItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">
+                    <div :data-index="k" :data-val="alItem" v-if="alItem === '巛'" class="kb-keyboard__del"></div>
+                    <div :data-index="k" :data-val="alItem" v-else="k !== '巛'">
                         {{alItem}}
                     </div>
                 </div>
 
                 <!-- 完成按钮 -->
                 <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__td-theme kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="80">完成</div>
-                <div v-if="isAlph" class="kb-keyboard__td kb-keyboard__finished-base row-center">完成</div>
+                <div v-if="isAlph && textArr.length < 7" class="kb-keyboard__td kb-keyboard__finished-base row-center">完成</div>
             </div>
         </div>
     </div>
@@ -41,11 +40,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: '输入或拍照录入车牌'
-        },
-        bgcolor: {
-            type: String,
-            default: '#ffffff'
+            default: ''
         },
         baseBorColor: {
             type: String,
@@ -58,7 +53,7 @@ export default {
     },
     data() {
         return {
-            isKeyboard: true,
+            isKeyboard: false,
             isNum: false,
             isAlph: false,
             animationData: {},
@@ -67,7 +62,7 @@ export default {
                 province:
                     '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝',
                 number: '1234567890',
-                alph: 'QWERTYUIOPASDFGHJKL巛ZXCVBNM'
+                alph: 'QWERTYUPASDFGHJKLZX巛CVBNM'
             },
             textBaseArr: ['', '', '', '', '', '', '', ''],
             textArr: []

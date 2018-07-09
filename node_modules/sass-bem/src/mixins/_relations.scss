@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+/// Relationship of parent element with current modifiers.
+///
+/// @param {String} $modifiers - List of modifiers that will make parent element child.
+///
+/// @example scss - Usage
+///     @include b('list') {
+///         @include e('item') {
+///             @include at('inline') {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+///     @include b('list') {
+///         @include e('item') {
+///             @include at('inline', 'inverse') {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+/// @example css - Output
+///     .list--inline .list__item {
+///         color: black;
+///     }
+///
+///     .list--inline.list--inverse .list__item {
+///         color: black;
+///     }
+
+@mixin at($modifiers...) {
+  #{at-selector($modifiers...)} {
+    @content;
+  }
+}
+
+/// Element with next element separated by plus sign.
+///
+/// @param {String} $element - Name of element that will be styled with parent element.
+///
+/// @example scss - Usage
+///     @include b('list') {
+///         @include e('item') {
+///             @include next('title') {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+/// @example css - Output
+///     .list__item + .list__title {
+///         color: black;
+///     }
+
+@mixin next($element) {
+  #{next-selector($element)} {
+    @content;
+  }
+}
+
+/// Element with same element separated by plus sign.
+///
+/// @example scss - Usage
+///     @include b('list') {
+///         @include e('item') {
+///             @include duo {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+/// @example css - Output
+///     .list__item + .list__item {
+///         color: black;
+///     }
+
+@mixin duo {
+  #{duo-selector()} {
+    @content;
+  }
+}
+
+/// Element with sibling elements separated by equivalency sign.
+///
+/// @param {String} $element - Name of element that will be styled with parent element.
+///
+/// @example scss - Usage
+///     @include b('list') {
+///         @include e('item') {
+///             @include with('title') {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+/// @example css - Output
+///     .list__item ~ .list__title {
+///         color: black;
+///     }
+
+@mixin with($element) {
+  #{with-selector($element)} {
+    @content;
+  }
+}
+
+/// While two selectors are on same modifier.
+///
+/// @param {String} $modifier - Name modifier that will follow parent modifier.
+///
+/// @example scss - Usage
+///     @include b('list') {
+///         @include m('inline') {
+///             @include while('ordered') {
+///                 color: black;
+///             }
+///         }
+///     }
+///
+/// @example css - Output
+///     .list--inline.list--ordered {
+///         color: black;
+///     }
+
+@mixin while($modifier) {
+  #{while-selector($modifier)} {
+    @content;
+  }
+}

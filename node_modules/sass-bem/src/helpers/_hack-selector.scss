@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+/// Selector of hack.
+///
+/// @access private
+///
+/// @param {String} $hack - Name of hack that will come after "._"
+/// @param {String} $namespace - Namespace of hack.
+///
+/// @returns {String} - ._[hack]
+///
+/// @see {mixin} hack
+
+@function hack-selector($hack, $namespace) {
+  @return unquote(".#{$namespace}#{$hack}");
+}
+
+/// @alias hack-selector
+
+@function _-selector($hack) {
+  @return hack-selector($hack, '_');
+}

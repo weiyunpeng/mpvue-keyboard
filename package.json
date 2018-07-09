@@ -1,6 +1,6 @@
 {
   "name": "mpvue-keyboard",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一个车牌输入键盘组件，支持新能源车牌号输入",
   "main": "src/index.vue",
   "scripts": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/weiyunpeng/mpvue-keyboard/issues"
   },
-  "homepage": "https://github.com/weiyunpeng/mpvue-keyboard#readme"
+  "homepage": "https://github.com/weiyunpeng/mpvue-keyboard#readme",
+  "dependencies": {
+    "sass-bem": "^2.6.5"
+  }
 }

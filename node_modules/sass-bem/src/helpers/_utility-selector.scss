@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+/// Selector of utility.
+///
+/// @access private
+///
+/// @param {String} $utility - Name of utility that will come after ".u-"
+/// @param {String} $namespace - Namespace of utility.
+///
+/// @returns {String} - .u-[utility]
+///
+/// @see {mixin} utility
+
+@function utility-selector($utility, $namespace) {
+  @return unquote(".#{$namespace}-#{$utility}");
+}
+
+/// @alias utility-selector
+
+@function u-selector($utility) {
+  @return utility-selector($utility);
+}

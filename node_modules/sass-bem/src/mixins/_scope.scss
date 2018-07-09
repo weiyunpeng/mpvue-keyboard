@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/// Signify that a class creates a new styling context or Scope. Similar to a Theme, but not necessarily cosmetic, these should be used sparingly—they can be open to abuse and lead to poor CSS if not used wisely.
+///
+/// @param {String} $scope - Name of scope that will come after ".s-"
+/// @param {String} $namespace [null] - Scope element namespace.
+///
+/// @example scss - Usage
+///     @include scope('paper') {
+///         color: black;
+///     }
+///
+///     @include s('paper') {
+///         color: black;
+///     }
+///
+/// @example css - Output
+///     .s-paper {
+///         color: black;
+///     }
+///
+///     .s-paper {
+///         color: black;
+///     }
+
+@mixin scope($scope, $namespace: $bem-scope-namespace) {
+  #{scope-selector($scope, $namespace)} {
+    @if $bem-debug == true {
+      outline: 5px solid #a2453d;
+    }
+    
+    @content;
+  }
+}
+
+/// @alias scope
+
+@mixin s($scope, $namespace: $bem-scope-namespace) {
+  @include scope($scope, $namespace) {
+    @content;
+  }
+}

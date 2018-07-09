@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/// Check if selector is modifier.
+///
+/// @access private
+///
+/// @param {String} $selector - Selector, which we will check for modifier
+///
+/// @returns {Boolean}
+
+@function is-modifier($selector) {
+  $separator: unquote("#{$bem-modifier-separator}");
+  
+  @return str-index($selector, $separator) != null;
+}

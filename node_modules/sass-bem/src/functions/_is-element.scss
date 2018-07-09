@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/// Check if selector is element.
+///
+/// @access private
+///
+/// @param {String} $selector - Selector, which we will check for element
+///
+/// @returns {Boolean}
+
+@function is-element($selector) {
+  $separator: unquote("#{$bem-element-separator}");
+  
+  @return str-index($selector, $separator) != null;
+}

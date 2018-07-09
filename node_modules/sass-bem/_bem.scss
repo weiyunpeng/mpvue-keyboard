@@ -1,0 +1,56 @@
+// SASS-BEM 2.4.1
+// http://zgabievi.me/sass-bem/
+// Copyright 2016 Zura Gabievi.
+// MIT License
+
+/// @group sass-bem
+
+// Configuration
+@import "src/config";
+
+// Functions
+@import "src/functions/bem-index";
+@import "src/functions/is-modifier";
+@import "src/functions/is-element";
+@import "src/functions/has-state";
+@import "src/functions/has-pseudo";
+@import "src/functions/is-block";
+@import "src/functions/get-block";
+@import "src/functions/str-replace";
+@import "src/functions/math-min";
+@import "src/functions/explode";
+@import "src/functions/implode";
+@import "src/functions/splice";
+
+// Helpers
+@import "src/helpers/block-selector";
+@import "src/helpers/element-selector";
+@import "src/helpers/modifier-selector";
+@import "src/helpers/relations-selector";
+@import "src/helpers/object-selector";
+@import "src/helpers/component-selector";
+@import "src/helpers/utility-selector";
+@import "src/helpers/theme-selector";
+@import "src/helpers/scope-selector";
+@import "src/helpers/state-selector";
+@import "src/helpers/pseudo-selector";
+@import "src/helpers/states-selector";
+@import "src/helpers/hack-selector";
+@import "src/helpers/test-selector";
+
+// Mixins
+@import "src/mixins/block";
+@import "src/mixins/element";
+@import "src/mixins/modifier";
+@import "src/mixins/relations";
+@import "src/mixins/states";
+@import "src/mixins/pseudo";
+@import "src/mixins/parse";
+@import "src/mixins/object";
+@import "src/mixins/component";
+@import "src/mixins/utility";
+@import "src/mixins/theme";
+@import "src/mixins/scope";
+@import "src/mixins/state";
+@import "src/mixins/hack";
+@import "src/mixins/test";
