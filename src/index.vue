@@ -124,6 +124,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@import 'base';
 @import 'node_modules/sass-bem/bem';
 $bem-component-namespace: 'kb';
 .kb {
