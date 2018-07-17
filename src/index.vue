@@ -53,7 +53,7 @@ export default {
     },
     data() {
         return {
-            isKeyboard: false,
+            isKeyboard: true,
             isNum: false,
             isAlph: false,
             isEnergy: true,
@@ -184,8 +184,8 @@ $bem-component-namespace: 'kb';
         border-color: #24c6dc;
     }
     @include e('new-energy') {
-        width: 80rpx;
-        height: 116rpx;
+        width: 76rpx;
+        height: 110rpx;
         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAB0CAYAAAD97t6zAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIzRjQ4NzU0ODVBRDExRThCQzU4RjgzODNBOTcxMzgyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIzRjQ4NzU1ODVBRDExRThCQzU4RjgzODNBOTcxMzgyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjNGNDg3NTI4NUFEMTFFOEJDNThGODM4M0E5NzEzODIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjNGNDg3NTM4NUFEMTFFOEJDNThGODM4M0E5NzEzODIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5bv1+SAAAIO0lEQVR42uyb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);
         background-size: 100% 100%;
         border: none;
@@ -204,12 +204,14 @@ $bem-component-namespace: 'kb';
     }
 
     @include e('panle') {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         position: absolute;
         bottom: 0;
         height: 488rpx;
         width: 100%;
         z-index: 999;
-        box-sizing: border-box;
         padding: 0 10rpx;
         border-bottom: 15rpx solid #eaf1f9;
         border-top: 20rpx solid #eaf1f9;
@@ -218,15 +220,16 @@ $bem-component-namespace: 'kb';
         --to: #eaf1f9;
 
         background: linear-gradient(130deg, var(--from), var(--to));
+        background: -webkit-linear-gradient(130deg, var(--from), var(--to));
     }
 
     @include e('td') {
         flex-grow: 1;
         -webkit-flex-grow: 1;
-        font-size: 36rpx;
-        height: 100rpx;
         flex: 1 1 10%;
         -webkit-flex: 1 1 10%;
+        font-size: 36rpx;
+        height: 100rpx;
         margin: 5rpx;
         border-radius: 10rpx 10rpx 10rpx 10rpx;
     }
@@ -234,10 +237,10 @@ $bem-component-namespace: 'kb';
     @include e('td-num') {
         flex-grow: 1;
         -webkit-flex-grow: 1;
-        font-size: 36rpx;
-        height: 100rpx;
         flex: 1 1 8%;
         -webkit-flex: 1 1 8%;
+        font-size: 36rpx;
+        height: 100rpx;
         margin: 5rpx;
         border-radius: 10rpx 10rpx 10rpx 10rpx;
     }
@@ -267,6 +270,7 @@ $bem-component-namespace: 'kb';
         --to: #e5e5e5;
 
         background: linear-gradient(130deg, var(--from), var(--to));
+        background: -webkit-linear-gradient(130deg, var(--from), var(--to));
     }
 
     @include e('td-theme') {
@@ -283,6 +287,7 @@ $bem-component-namespace: 'kb';
         --to: #e5e5e5;
 
         background: linear-gradient(130deg, var(--from), var(--to));
+        background: -webkit-linear-gradient(130deg, var(--from), var(--to));
     }
 
     @include e('td-tap-fin-theme') {
@@ -292,6 +297,7 @@ $bem-component-namespace: 'kb';
         --to: #b8b8b9;
 
         background: linear-gradient(130deg, var(--from), var(--to));
+        background: -webkit-linear-gradient(130deg, var(--from), var(--to));
     }
 }
 </style>

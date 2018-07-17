@@ -1,6 +1,6 @@
 <template>
 <view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
-    <keyboard :title="'输入车牌号'" @keyboard="change"></keyboard>
+     <keyboard @keyboard="change" activeBorColor="#0deafe" baseBorColor="38f8f8f"></keyboard>
 </template>
 
 <script>
@@ -17,7 +17,6 @@ export default {
     computed: {},
     methods: {
         change(msg) {
-            console.log(msg);
             this.msg = msg
         }
     },
