@@ -13,14 +13,14 @@
             <div class="kb-keyboard__over row-wrap" v-if="isKeyboard" @tap="closeKeyboard"></div>
             <div class="kb-keyboard__panle row-wrap" v-if="isKeyboard" :animation="animationData">
                 <!--省份简写键盘-->
-                <div v-if="!isAlph" v-for="(proItem, i) in keyboardValue.province" :key="proItem" @tap="tapKeyboard" :data-index="i" :data-val="proItem" class="kb-keyboard__td kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{proItem}}</div>
+                <div v-if="!isAlph" v-for="(proItem, i) in '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝' " :key="i" @tap="tapKeyboard" :data-index="i" :data-val="proItem" class="kb-keyboard__td kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="40">{{proItem}}</div>
 
                 <!--数字字母键盘-->
-                <div v-if="isAlph && isNum" v-for="(numItem, j) in keyboardValue.number" :key="numItem" @tap="tapKeyboard" :data-index="j" :data-val="numItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">{{numItem}}</div>
-                <div v-if="isAlph && !isNum" v-for="(numItem, q) in keyboardValue.number" :key="q" class="kb-keyboard__td-num kb-keyboard__td-tap-theme row-center">{{numItem}}</div>
+                <div v-if="isAlph && isNum" v-for="(numItem, j) in '1234567890' " :key="j" @tap="tapKeyboard" :data-index="j" :data-val="numItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="40">{{numItem}}</div>
+                <div v-if="isAlph && !isNum" v-for="(numItem, q) in '1234567890' " :key="q" class="kb-keyboard__td-num kb-keyboard__td-tap-theme row-center">{{numItem}}</div>
 
                 <!--字母键盘-->
-                <div v-if="isAlph" v-for="(alItem , k) in keyboardValue.alph" :key="alItem" @tap="tapKeyboard" :data-index="k" :data-val="alItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="80">
+                <div v-if="isAlph" v-for="(alItem , k) in 'QWERTYUPASDFGHJKLZX巛CVBNM' " :key="k" @tap="tapKeyboard" :data-index="k" :data-val="alItem" class="kb-keyboard__td-num kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="40">
                     <div :data-index="k" :data-val="alItem" v-if="alItem === '巛'" class="kb-keyboard__del"></div>
                     <div :data-index="k" :data-val="alItem" v-else="k !== '巛'">
                         {{alItem}}
@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- 完成按钮 -->
-                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__td-theme kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="80">完成</div>
+                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="60">完成</div>
                 <div v-if="isAlph && textArr.length < 7" class="kb-keyboard__td kb-keyboard__finished-base row-center">完成</div>
             </div>
         </div>
@@ -53,18 +53,12 @@ export default {
     },
     data() {
         return {
-            isKeyboard: true,
+            isKeyboard: false,
             isNum: false,
             isAlph: false,
             isEnergy: true,
             animationData: {},
             animation: {},
-            keyboardValue: {
-                province:
-                    '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝',
-                number: '1234567890',
-                alph: 'QWERTYUPASDFGHJKLZX巛CVBNM'
-            },
             textBaseArr: ['', '', '', '', '', '', '', ''],
             textArr: [],
             tapVal: ''
@@ -135,7 +129,7 @@ export default {
     mounted() {
         let animation = wx.createAnimation({
             transformOrigin: '50% 50%',
-            duration: 200,
+            duration: 1200,
             timingFunction: 'linear',
             delay: 0
         });
