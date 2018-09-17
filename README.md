@@ -41,7 +41,7 @@ npm i mpvue-keyboard --save
 ``` vue
 <template>
 <view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
-    <keyboard :title="'输入车牌号'" @keyboard="change"></keyboard>
+     <keyboard :show="true" extra-key="支付" @keyboard="keyboardChange" active-border="#0deafe" base-border="38f8f8f" @input="inputChange" @close="closeChange" @delete="delChnage"></keyboard>
 </template>
 
 <script>
@@ -58,12 +58,21 @@ export default {
     computed: {},
     methods: {
         change(msg) {
-            console.log(msg);
             this.msg = msg
+        },
+        inputChange() {
+            console.log('get input');
+        },
+        closeChange() {
+            console.log('get close');
+        },
+        delChnage() {
+            console.log('get del')
         }
     },
     mounted() {}
 };
 </script>
+
 
 ```
