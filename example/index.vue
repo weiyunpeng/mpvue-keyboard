@@ -1,6 +1,6 @@
 <template>
 <view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
-     <keyboard @keyboard="change" activeBorColor="#0deafe" baseBorColor="38f8f8f"></keyboard>
+     <keyboard :show="true" extra-key="支付" @keyboard="keyboardChange" active-border="#0deafe" base-border="38f8f8f" @input="inputChange" @close="closeChange" @delete="delChnage"></keyboard>
 </template>
 
 <script>
@@ -18,6 +18,15 @@ export default {
     methods: {
         change(msg) {
             this.msg = msg
+        },
+        inputChange() {
+            console.log('get input');
+        },
+        closeChange() {
+            console.log('get close');
+        },
+        delChnage() {
+            console.log('get del')
         }
     },
     mounted() {}

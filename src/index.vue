@@ -5,13 +5,13 @@
         </div>
         <div class="row-center">
             <ul class="kb-input kb-input__ul row-around" @tap="showKeyboard">
-                <li v-for="(item, index) in textBaseArr" :key="index" @click="energy(index)" class="row-center kb-input__li" :style="index === textArr.length ? 'border-color:'+activeBorColor : 'border-color:'+baseBorColor" :class="index === 7 && isEnergy? 'kb-input__new-energy' : '' ">{{item}}</li>
+                <li v-for="(item, index) in textBaseArr" :key="index" @click="energy(index)" class="row-center kb-input__li" :style="index === textArr.length ? 'border-color:'+activeBorder : 'border-color:'+baseBorder" :class="index === 7 && isEnergy? 'kb-input__new-energy' : '' ">{{item}}</li>
             </ul>
         </div>
 
         <div class="kb-keyboard">
-            <div class="kb-keyboard__over row-wrap" v-if="isKeyboard" @tap="closeKeyboard"></div>
-            <div class="kb-keyboard__panle row-wrap" v-if="isKeyboard" :animation="animationData">
+            <div class="kb-keyboard__over row-wrap" v-if="show" @tap="closeKeyboard"></div>
+            <div class="kb-keyboard__panle row-wrap" v-if="show">
                 <!--省份简写键盘-->
                 <div v-if="!isAlph" v-for="(proItem, i) in '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝' " :key="i" @tap="tapKeyboard" :data-index="i" :data-val="proItem" class="kb-keyboard__td kb-keyboard__td-theme row-center" hover-class="kb-keyboard__td-tap-theme" hover-start-time="0" hover-stay-time="40">{{proItem}}</div>
 
@@ -28,8 +28,8 @@
                 </div>
 
                 <!-- 完成按钮 -->
-                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="60">完成</div>
-                <div v-if="isAlph && textArr.length < 7" class="kb-keyboard__td kb-keyboard__finished-base row-center">完成</div>
+                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="60">{{extraKey}}</div>
+                <div v-if="isAlph && textArr.length < 7" class="kb-keyboard__td kb-keyboard__finished-base row-center">{{extraKey}}</div>
             </div>
         </div>
     </div>
@@ -42,23 +42,28 @@ export default {
             type: String,
             default: ''
         },
-        baseBorColor: {
+        baseBorder: {
             type: String,
             default: '#cccccc'
         },
-        activeBorColor: {
+        activeBorder: {
             type: String,
             default: '#ff7149'
+        },
+        show: {
+            type: Boolean,
+            default: false
+        },
+        extraKey: {
+            type: String,
+            default: '完成'
         }
     },
     data() {
         return {
-            isKeyboard: false,
             isNum: false,
             isAlph: false,
             isEnergy: true,
-            animationData: {},
-            animation: {},
             textBaseArr: ['', '', '', '', '', '', '', ''],
             textArr: [],
             tapVal: ''
@@ -67,21 +72,18 @@ export default {
     computed: {},
     methods: {
         showKeyboard() {
-            this.isKeyboard = true;
-            this.animation.height('488rpx').step();
-            this.animationData = this.animation.export();
+            this.show = true;
+            this.$emit('input');
         },
         closeKeyboard() {
-            this.animation.height(0).step();
-            this.animationData = this.animation.export();
-            setTimeout(() => {
-                this.isKeyboard = false;
-            });
+            this.show = false;
+            this.$emit('close');
         },
         tapKeyboard(e) {
             this.tapVal = e.target.dataset.val;
 
             if (this.tapVal === '巛') {
+                this.$emit('delete');
                 this.textArr.pop();
                 this.textBaseArr.splice(this.textArr.length, 1, '');
                 if (
@@ -126,15 +128,7 @@ export default {
             }
         }
     },
-    mounted() {
-        let animation = wx.createAnimation({
-            transformOrigin: '50% 50%',
-            duration: 1200,
-            timingFunction: 'linear',
-            delay: 0
-        });
-        this.animation = animation;
-    }
+    mounted() {}
 };
 </script>
 <style lang="scss">
@@ -147,43 +141,43 @@ $bem-component-namespace: 'kb';
 
 @include c('input') {
     width: 100%;
-    height: 120rpx;
-    font-size: 36rpx;
+    height: 60px;
+    font-size: 18px;
     position: relative;
-    top: 100rpx;
+    top: 50px;
 
     @include e('text') {
         width: 90%;
-        height: 100rpx;
-        padding: 20rpx;
-        border-radius: 5rpx;
+        height: 50px;
+        padding: 10px;
+        border-radius: 3px;
         color: #bdc3c7;
         z-index: 10;
     }
 
     @include e('ul') {
         width: 92%;
-        height: 102rpx;
+        height: 61px;
         z-index: 999;
     }
     @include e('li') {
-        width: 72rpx;
-        height: 106rpx;
-        border: 1rpx solid #cccccc;
-        border-radius: 10rpx;
+        width: 36px;
+        height: 53px;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
         background-color: #ffffff;
     }
 
     @include e('active') {
-        border-color: #24c6dc;
+        border: 1px solid #24c6dc;
     }
     @include e('new-energy') {
-        width: 76rpx;
-        height: 110rpx;
+        width: 38px;
+        height: 55px;
         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAB0CAYAAAD97t6zAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIzRjQ4NzU0ODVBRDExRThCQzU4RjgzODNBOTcxMzgyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIzRjQ4NzU1ODVBRDExRThCQzU4RjgzODNBOTcxMzgyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjNGNDg3NTI4NUFEMTFFOEJDNThGODM4M0E5NzEzODIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjNGNDg3NTM4NUFEMTFFOEJDNThGODM4M0E5NzEzODIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5bv1+SAAAIO0lEQVR42uyb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);
         background-size: 100% 100%;
         border: none;
-        border-radius: 10rpx;
+        border-radius: 5px;
     }
 }
 
@@ -203,12 +197,12 @@ $bem-component-namespace: 'kb';
         -webkit-box-sizing: border-box;
         position: absolute;
         bottom: 0;
-        height: 488rpx;
+        height: 232px;
         width: 100%;
         z-index: 999;
-        padding: 0 10rpx;
-        border-bottom: 15rpx solid #eaf1f9;
-        border-top: 20rpx solid #eaf1f9;
+        padding: 0 5px;
+        border-bottom: 8px solid #eaf1f9;
+        border-top: 10px solid #eaf1f9;
 
         --from: #eaf1f9;
         --to: #eaf1f9;
@@ -222,10 +216,10 @@ $bem-component-namespace: 'kb';
         -webkit-flex-grow: 1;
         flex: 1 1 10%;
         -webkit-flex: 1 1 10%;
-        font-size: 36rpx;
-        height: 100rpx;
-        margin: 5rpx;
-        border-radius: 10rpx 10rpx 10rpx 10rpx;
+        font-size: 18px;
+        height: 48px;
+        margin: 2px;
+        border-radius: 5px;
     }
 
     @include e('td-num') {
@@ -233,10 +227,10 @@ $bem-component-namespace: 'kb';
         -webkit-flex-grow: 1;
         flex: 1 1 8%;
         -webkit-flex: 1 1 8%;
-        font-size: 36rpx;
-        height: 100rpx;
-        margin: 5rpx;
-        border-radius: 10rpx 10rpx 10rpx 10rpx;
+        font-size: 18px;
+        height: 48px;
+        margin: 2px;
+        border-radius: 5px;
     }
 
     @include e('del') {
@@ -248,36 +242,38 @@ $bem-component-namespace: 'kb';
 
     @include e('finished') {
         position: relative;
-        top: 5rpx;
+        height: 48px;
+        top: 2px;
         flex: 1 1 23%;
         -webkit-flex: 1 1 23%;
+        border: 1px solid #2f62ed;
+        background-color: #2f62ed;
+        color: #ffffff;
     }
 
     @include e('finished-base') {
         position: relative;
-        top: 5rpx;
+        height: 48px;
+        top: 2px;
         flex: 1 1 23%;
         -webkit-flex: 1 1 23%;
-        border: 1rpx solid #cdd0d5;
+        border: 1px solid #cdd0d5;
+        background-color: #cdd0d5;
         color: #1e1e1e;
-        --from: #e5e5e5;
-        --to: #e5e5e5;
-
-        background: linear-gradient(130deg, var(--from), var(--to));
-        background: -webkit-linear-gradient(130deg, var(--from), var(--to));
     }
 
     @include e('td-theme') {
-        border: 1rpx solid #cdd0d5;
+        border: 1px solid #cdd0d5;
         color: #1e1e1e;
-        box-shadow: 5rpx 5rpx 2rpx #cdd0d5;
+        box-shadow: 3px 3px 1px #cdd0d5;
+        -webkit-box-shadow: 3px 3px 1px #cdd0d5;
         background: #fff;
     }
 
     @include e('td-tap-theme') {
-        border: 1rpx solid #cdd0d5;
+        border: 1px solid #cdd0d5;
         color: #1e1e1e;
-        --from: #e5e5e5;
+        --from: #e5e2e2;
         --to: #e5e5e5;
 
         background: linear-gradient(130deg, var(--from), var(--to));
@@ -285,7 +281,7 @@ $bem-component-namespace: 'kb';
     }
 
     @include e('td-tap-fin-theme') {
-        border: 1rpx solid #cdd0d5;
+        border: 1px solid #cdd0d5;
         color: #fff;
         --from: #cdd0d5;
         --to: #b8b8b9;
