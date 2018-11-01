@@ -1,6 +1,6 @@
 <template>
-<view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
-     <keyboard :show="true" extra-key="支付" @keyboard="keyboardChange" active-border="#0deafe" base-border="38f8f8f" @input="inputChange" @close="closeChange" @delete="delChnage"></keyboard>
+    <view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
+    <keyboard :show="true" extra-key="支付" @keyboard="keyboard" active-border="#0deafe" base-border="38f8f8f" @input="inputChange" @close="closeChange" @delete="delChnage"></keyboard>
 </template>
 
 <script>
@@ -11,13 +11,13 @@ export default {
     },
     data() {
         return {
-            msg:msg
+            msg: ''
         };
     },
     computed: {},
     methods: {
-        change(msg) {
-            this.msg = msg
+        keyboard(msg) {
+            this.msg = msg;
         },
         inputChange() {
             console.log('get input');
@@ -26,7 +26,7 @@ export default {
             console.log('get close');
         },
         delChnage() {
-            console.log('get del')
+            console.log('get del');
         }
     },
     mounted() {}
