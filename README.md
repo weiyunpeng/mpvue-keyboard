@@ -17,6 +17,7 @@
 | active-border     | String       | #ff7149          | 自定义正在输入的格子边框颜色 |
 | extra-key     | String       | 完成          | 右下角按键内容 |
 | keyboard       | Function       | null          | 获取键盘输入结果 |
+| keyboard       | Function       | null          | 获取键盘输入结果 |
 
 
 ## Event
@@ -24,9 +25,6 @@
 | 事件名              | 说明           | 参数        |
 | -----------------|--------------- | ----------------  |
 | keyboard        | 点击完成键时触发         |     key: 按键所选择的内容         |
-| input        | 点击按键时触发         |     -         |
-| close        | 点击关闭按钮或非键盘区域时触发         |     -         |
-| delete        | 点击删除键时触发         |     -         |
 
 ## 基本使用方法
 
@@ -40,8 +38,8 @@ npm i mpvue-keyboard --save
 
 ``` vue
 <template>
-<view>车牌号为：<text style="font-size:60rpx">{{msg}}</text></view>
-     <keyboard :show="true" extra-key="支付" @keyboard="keyboardChange" active-border="#0deafe" base-border="38f8f8f" @input="inputChange" @close="closeChange" @delete="delChnage"></keyboard>
+    <keyboard :plateNum.sync="plateNum" @keyboard="keyboardChange" :show.sync="show" extraKey="立即支付" active-border="#6f85ff" base-border="#6f85ff"></keyboard>
+    <button @click="bandChange">绑定无感支付</button>
 </template>
 
 <script>
@@ -52,22 +50,16 @@ export default {
     },
     data() {
         return {
-            msg:msg
+            plateNum: ''
         };
     },
     computed: {},
     methods: {
-        change(msg) {
-            this.msg = msg
+        keyboardChange(plate) {
+            this.plateNum = plate;
         },
-        inputChange() {
-            console.log('get input');
-        },
-        closeChange() {
-            console.log('get close');
-        },
-        delChnage() {
-            console.log('get del')
+        async bandChange() {
+            console.log(this.plateNum);
         }
     },
     mounted() {}
