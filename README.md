@@ -17,7 +17,6 @@
 | active-border     | String       | #ff7149          | 自定义正在输入的格子边框颜色 |
 | extra-key     | String       | 完成          | 右下角按键内容 |
 | keyboard       | Function       | null          | 获取键盘输入结果 |
-| keyboard       | Function       | null          | 获取键盘输入结果 |
 
 
 ## Event
