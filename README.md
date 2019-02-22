@@ -3,6 +3,8 @@
 [![npm package](https://img.shields.io/npm/v/mpvue-keyboard.svg)](https://www.npmjs.com/package/mpvue-keyboard)
 [![npm downloads](http://img.shields.io/npm/dm/mpvue-keyboard.svg)](https://www.npmjs.com/package/mpvue-keyboard)
 
+## [更新日志](CHANGE_LOG.md)
+
 ## 效果图
 ![默认效果1](./static/1.jpg)
 ![默认效果2](./static/2.jpg)
@@ -15,8 +17,8 @@
 | title        | String         | -             | 自定义 标题  |
 | base-border           | String         | #cccccc   | 自定义输入格子边框颜色  |
 | active-border     | String       | #ff7149          | 自定义正在输入的格子边框颜色 |
+| finishedStyle       | String       | -          | 完成按钮可点击时的样式 |
 | extra-key     | String       | 完成          | 右下角按键内容 |
-| keyboard       | Function       | null          | 获取键盘输入结果 |
 
 
 ## Event

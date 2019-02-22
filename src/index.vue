@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- 完成按钮 -->
-                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="60">{{extraKey}}</div>
+                <div v-if="isAlph && textArr.length > 6" @tap="tapFinished" :style="finishedStyle" class="kb-keyboard__td kb-keyboard__finished row-center" hover-class="kb-keyboard__td-tap-fin-theme" hover-start-time="0" hover-stay-time="60">{{extraKey}}</div>
                 <div v-if="isAlph && textArr.length < 7" class="kb-keyboard__td kb-keyboard__finished-base row-center">{{extraKey}}</div>
             </div>
         </div>
@@ -61,6 +61,10 @@ export default {
         plateNum: {
             type: String,
             default: ''
+        },
+        finishedStyle:{
+            type:String,
+            default:''
         }
     },
     data() {
@@ -245,8 +249,8 @@ export default {
     position: relative;
     height: 48px;
     top: 2px;
-    flex: 1 1 23%;
-    -webkit-flex: 1 1 23%;
+    max-width: 100% !important;
+    margin-left: 6px;
     border: 1px solid #2f62ed;
     background-color: #2f62ed;
     color: #ffffff;
