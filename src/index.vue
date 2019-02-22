@@ -180,6 +180,11 @@ export default {
     border-radius: 5px;
 }
 
+.kb-keyboard{
+    width: 100vw;
+    background-color: #ffffff;
+}
+
 .kb-keyboard__over {
     z-index: 888;
     position: fixed;
@@ -194,8 +199,9 @@ export default {
     -webkit-box-sizing: border-box;
     position: absolute;
     bottom: 0;
+    left: 2px;
     height: 232px;
-    width: 100%;
+    width: 100vw;
     z-index: 999;
     padding: 0 5px;
     border-bottom: 8px solid #eaf1f9;
@@ -212,6 +218,7 @@ export default {
     -webkit-flex-grow: 1;
     flex: 1 1 10%;
     -webkit-flex: 1 1 10%;
+    max-width: 9.7vw;
     font-size: 18px;
     height: 48px;
     margin: 2px;
@@ -220,8 +227,9 @@ export default {
 .kb-keyboard__td-num {
     flex-grow: 1;
     -webkit-flex-grow: 1;
-    flex: 1 1 8%;
-    -webkit-flex: 1 1 8%;
+    flex: 1 1 10%;
+    -webkit-flex: 1 1 10%;
+    max-width: 8.6vw;
     font-size: 18px;
     height: 48px;
     margin: 2px;
@@ -247,8 +255,8 @@ export default {
     position: relative;
     height: 48px;
     top: 2px;
-    flex: 1 1 23%;
-    -webkit-flex: 1 1 23%;
+    max-width: 100% !important;
+    margin-left: 6px;
     border: 1px solid #cdd0d5;
     background-color: #cdd0d5;
     color: #1e1e1e;
