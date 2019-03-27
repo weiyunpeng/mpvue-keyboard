@@ -38,7 +38,7 @@
 
 ## 基本使用方法
 
->[可运行基于uni-app和colorui的基础框架查看详细例子https://github.com/omycli/wuc](https://github.com/omycli/wuc)
+>[可运行基础框架查看详细例子https://github.com/omycli/wuc](https://github.com/omycli/wuc)
 
 * 安装
 
