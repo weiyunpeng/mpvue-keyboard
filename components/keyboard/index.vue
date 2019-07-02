@@ -1,86 +1,117 @@
 <template>
   <div class="kb">
     <div class="flex-center">
-      <ul class="kb-input kb-input__ul" @tap="showKeyboard">
-        <li
-          v-for="(item, index) in textBaseArr"
-          :key="item"
-          @tap="energy(index)"
-          :style="index === textArr.length ? 'border-color:'+activeBorder : 'border-color:'+baseBorder"
-          :class="[index === 7 && isEnergy? energyClass : '' , inputClass]"
-        >{{item}}</li>
-      </ul>
+      <div class="kb-input kb-input__ul" @tap="showKeyboard">
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[0]}}</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[1]}}</div>
+        <div class="kb-dot">·</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[2]}}</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[3]}}</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[4]}}</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[5]}}</div>
+        <div :style="'border-color:'+baseBorder" class="kb-input__li">{{textBaseArr[6]}}</div>
+        <div
+          :style="'border-color:'+baseBorder"
+          class="kb-input__li"
+          :class="isEnergy ? 'kb-input__new-energy' : ''"
+          @tap="energy(7)"
+        >{{textBaseArr[7]}}</div>
+      </div>
     </div>
 
     <div class="kb-keyboard">
-      <div
-        class="kb-keyboard__over row-wrap"
-        v-show="show"
-        @tap="closeKeyboard"
-      ></div>
-      <div
-        class="kb-keyboard__panle row-wrap"
-        :class="keyboardClass"
-        v-show="show"
-      >
+      <!-- <div class="kb-keyboard__over" v-show="show" @tap="closeKeyboard"></div> -->
+      <div class="kb-keyboard__panle flex-center row-wrap kb-keyboard__panle-style" v-show="show">
         <!--省份简写键盘-->
         <div
           v-show="!isAlph"
-          v-for="(proItem, i) in province "
-          :key="i"
-          @tap="tapKeyboard(proItem)"
-          class="kb-keyboard__td"
-          :class="keycapClass"
+          v-for="proItem in province "
+          :key="proItem"
+          @tap="tapKeyboard"
+          :data-val="proItem"
+          class="kb-keyboard__td kb-keyboard__td-theme"
           hover-class="kb-keyboard__td-tap-theme"
-          hover-start-time="0"
-          hover-stay-time="40"
+          :hover-start-time="0"
+          :hover-stay-time="40"
         >{{proItem}}</div>
 
-        <!--数字字母键盘-->
-        <button
-          v-show="isAlph"
-          v-for="(numItem, j) in natural "
-          :key="j"
-          @tap="tapKeyboard(numItem)"
-          class="kb-keyboard__td-num"
-          :class="naturalClass"
-          hover-class="kb-keyboard__td-tap-theme"
-          hover-start-time="0"
-          hover-stay-time="40"
-          :disabled="!isNum"
-        >{{numItem}}</button>
-
-        <!--字母键盘-->
-        <div
-          v-show="isAlph"
-          v-for="(alItem , k) in 'QWERTYUPASDFGHJKLZX巛CVBNM' "
-          :key="k"
-          @tap="tapKeyboard(alItem)"
-          class="kb-keyboard__td-num"
-          :class="alphClass"
-          hover-class="kb-keyboard__td-tap-theme"
-          hover-start-time="0"
-          hover-stay-time="40"
-        >
-          <text v-if="alItem === '巛'" :class="delClass"></text>
-          <text v-else-if="k !== '巛'">{{alItem}}</text>
+        <!--数字键盘-->
+        <div class="row-nowrap">
+          <button
+            v-show="isAlph"
+            v-for="numItem in natural"
+            :key="numItem"
+            @tap="tapKeyboard"
+            :data-val="numItem"
+            class="kb-keyboard__td-num kb-keyboard__td-theme"
+            hover-class="kb-keyboard__td-tap-theme"
+            :hover-start-time="0"
+            :hover-stay-time="40"
+            :disabled="!isNum"
+          >{{numItem}}</button>
         </div>
 
-        <!-- 完成按钮 -->
-        <div
-          v-if="isAlph && textArr.length > 6"
-          @tap="tapFinished"
-          class="kb-keyboard__td-finished"
-          :class="finishedClass"
-          hover-class="kb-keyboard__td-tap-fin-theme"
-          hover-start-time="0"
-          hover-stay-time="60"
-        >{{extraKey}}</div>
-        <div
-          v-if="isAlph && textArr.length < 7"
-          class="kb-keyboard__td-finished"
-          :class="finishedBaseClass"
-        >{{extraKey}}</div>
+        <!--字母键盘-->
+        <div class="row-nowrap">
+          <div
+            v-show="isAlph"
+            v-for="alItem in 'QWERTYUPAS'"
+            :key="alItem"
+            @tap="tapKeyboard"
+            :data-val="alItem"
+            class="kb-keyboard__td-alph kb-keyboard__td-theme"
+            hover-class="kb-keyboard__td-tap-theme"
+            :hover-start-time="0"
+            :hover-stay-time="40"
+          >
+            <text>{{alItem}}</text>
+          </div>
+        </div>
+        <div class="row-nowrap">
+          <div
+            v-show="isAlph"
+            v-for="alItem in 'DFGHJKLZ-'"
+            :key="alItem"
+            @tap="tapKeyboard"
+            :data-val="alItem"
+            class="kb-keyboard__td-alph kb-keyboard__td-theme"
+            hover-class="kb-keyboard__td-tap-theme"
+            :hover-start-time="0"
+            :hover-stay-time="40"
+          >
+            <text v-if="alItem === '-'" class="kb-keyboard__del"></text>
+            <text v-else>{{alItem}}</text>
+          </div>
+        </div>
+        <div class="row-nowrap">
+          <div
+            v-show="isAlph"
+            v-for="alItem in 'XCVBNM' "
+            :key="alItem"
+            @tap="tapKeyboard"
+            :data-val="alItem"
+            class="kb-keyboard__td-alph kb-keyboard__td-theme"
+            hover-class="kb-keyboard__td-tap-theme"
+            :hover-start-time="0"
+            :hover-stay-time="40"
+          >
+            <text>{{alItem}}</text>
+          </div>
+
+          <!-- 完成按钮 -->
+          <div
+            v-if="isAlph && textArr.length > 6"
+            @tap="tapFinished"
+            class="kb-keyboard__td-finished kb-keyboard__finished"
+            hover-class="kb-keyboard__td-tap-fin-theme"
+            :hover-start-time="0"
+            :hover-stay-time="60"
+          >{{extraKey}}</div>
+          <div
+            v-if="isAlph && textArr.length < 7"
+            class="kb-keyboard__td-finished kb-keyboard__finished-base"
+          >{{extraKey}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,49 +124,17 @@ export default {
       type: Boolean,
       default: false
     },
-    inputClass: {
-      type: String,
-      default: "kb-input__li flex-center"
-    },
-    energyClass: {
-      type: String,
-      default: "kb-input__new-energy"
-    },
-    keyboardClass: {
-      type: String,
-      default: "kb-keyboard__panle-style"
-    },
     province: {
       type: String,
       default: "京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝"
-    },
-    keycapClass: {
-      type: String,
-      default: "kb-keyboard__td-theme"
     },
     natural: {
       type: String,
       default: "1234567890"
     },
-    naturalClass: {
-      type: String,
-      default: "kb-keyboard__td-theme"
-    },
-    alphClass: {
-      type: String,
-      default: "kb-keyboard__td-theme"
-    },
-    delClass: {
-      type: String,
-      default: "kb-keyboard__del"
-    },
     baseBorder: {
       type: String,
-      default: "#cccccc"
-    },
-    activeBorder: {
-      type: String,
-      default: "#ff7149"
+      default: "#6f85ff"
     },
     extraKey: {
       type: String,
@@ -144,14 +143,6 @@ export default {
     plateNum: {
       type: String,
       default: ""
-    },
-    finishedClass: {
-      type: String,
-      default: "kb-keyboard__finished"
-    },
-    finishedBaseClass: {
-      type: String,
-      default: "kb-keyboard__finished-base"
     }
   },
   data() {
@@ -167,17 +158,15 @@ export default {
   computed: {},
   methods: {
     showKeyboard() {
-      this.show = true;
       this.$emit("update:show", true);
     },
     closeKeyboard() {
-      this.show = false;
       this.$emit("update:show", false);
     },
-    tapKeyboard(tapval) {
-      this.tapVal = tapval;
+    tapKeyboard(e) {
+      this.tapVal = e.currentTarget.dataset.val;
 
-      if (this.tapVal === "巛") {
+      if (this.tapVal === "-") {
         this.textArr.pop();
         this.textBaseArr.splice(this.textArr.length, 1, "");
         if (this.textArr.length === 7 && !this.isEnergy && this.tapVal !== "") {
@@ -189,11 +178,11 @@ export default {
         if (this.textArr.length > 6 && this.isEnergy) {
           this.textBaseArr.splice(6, 1, this.tapVal);
           this.textArr.splice(6, 1, this.tapVal);
-          this.$emit("update:plateNum", this.textArr.join(""));
           return false;
         }
-        this.textArr.splice(this.textArr.length, 0, this.tapVal);
+        this.textArr = [...this.textArr, this.tapVal];
         this.textBaseArr.splice(this.textArr.length - 1, 1, this.tapVal);
+        this.$emit("update:plateNum", this.textArr.join(""));
       }
 
       if (this.textArr.length === 1) {
@@ -238,13 +227,21 @@ export default {
   justify-content: space-around;
   -webkit-justify-content: space-around;
   width: 92%;
-  height: 61px;
+  height: 60px;
   z-index: 999;
 }
 .kb-input__li {
-  width: 36px;
-  height: 52px;
-  border: 2px solid #cccccc;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  width: 34px;
+  height: 50px;
+  border: 1px solid #cccccc;
   border-radius: 4px;
   background-color: #ffffff;
 }
@@ -252,8 +249,8 @@ export default {
   border: 1px solid #24c6dc;
 }
 .kb-input__new-energy {
-  width: 42px;
-  height: 54px;
+  width: 36px;
+  height: 50px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABQCAYAAABGfRh7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDphNWFhZmQ5YS05YjgzLTdlNDgtOWVkOS1iNGEzMjNmNmE1NGUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEY0MjlCNjlFMEQ1MTFFOEExQjZFNUUzOEYyQjMzODgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEY0MjlCNjhFMEQ1MTFFOEExQjZFNUUzOEYyQjMzODgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6YWRhMmJkZGUtZmE0Ny00MjQ5LWIwNjYtMWUwZTMxNzhkNDc4IiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6Y2NjYmIwZGYtY2JhNS1hNjRjLWEwNWMt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);
   background-size: 100% 100%;
   border: none;
@@ -283,7 +280,7 @@ export default {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
@@ -306,7 +303,7 @@ export default {
   -webkit-align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
-  width: calc(100vw / 10);
+  width: calc((100vw - 4px) / 9);
   font-size: 18px;
   height: 48px;
   margin: 2px;
@@ -319,11 +316,20 @@ export default {
   -webkit-align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
-  flex-grow: 1;
-  -webkit-flex-grow: 1;
-  flex: 1 1 10%;
-  -webkit-flex: 1 1 10%;
-  max-width: 8.6vw;
+  width: calc((100vw - 4px) / 12);
+  font-size: 18px;
+  height: 48px;
+  margin: 2px;
+  border-radius: 5px;
+}
+.kb-keyboard__td-alph {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  width: calc((100vw - 4px) / 12);
   font-size: 18px;
   height: 48px;
   margin: 2px;
@@ -336,11 +342,11 @@ export default {
   -webkit-align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
-  width: 110px;
   height: 48px;
   margin-top: 2px;
-  margin-left: 10px;
-  font-size: 18px;
+  margin-left: 4px;
+  font-size: 14px;
+  padding: 0 4px;
   border-radius: 5px;
 }
 .kb-keyboard__del {
@@ -403,5 +409,23 @@ export default {
   -webkit-flex-direction: row;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
+}
+.row-nowrap {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+}
+.kb-dot {
+  position: relative;
+  top: 5px;
+  font-size: 36px;
+  font-weight: bold;
+  width: 14px;
+  height: 50px;
+  text-align: center;
+  color: #b7c2ff;
 }
 </style>
